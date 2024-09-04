@@ -21,9 +21,10 @@ export default class AuthMiddleware {
   ) {
     await ctx.auth.authenticateUsing(options.guards, { loginRoute: this.redirectTo })
     if (ctx.auth.user) {
-      console.log(ctx.auth.user.id)
-      ctx.request.updateBody({ user_id: ctx.auth.user.id })
+      const requestData = ctx.request.all()
+      requestData.userId = ctx.auth.user.id
+      ctx.request.updateBody(requestData)
+      return next()
     }
-    return next()
   }
 }

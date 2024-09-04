@@ -21,6 +21,9 @@ export default class Lobby extends BaseModel {
   @column()
   declare map: string
 
+  @column()
+  declare password: string
+
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime
 

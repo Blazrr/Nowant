@@ -2,12 +2,7 @@ import router from '@adonisjs/core/services/router'
 import { middleware } from './kernel.js'
 
 const AuthController = () => import('#controllers/auth_controller')
-
-router.get('/', async () => {
-  return {
-    hello: 'world',
-  }
-})
+const LobbiesController = () => import('#controllers/lobbies_controller')
 
 router
   .group(() => {
@@ -17,3 +12,11 @@ router
     router.get('dataByToken', [AuthController, 'dataByToken']).use(middleware.auth())
   })
   .prefix('/auth')
+
+router
+  .group(() => {
+    router.post('create', [LobbiesController, 'create']).use(middleware.auth())
+    router.get('getAll', [LobbiesController, 'getAll']).use(middleware.auth())
+    router.get('getOne/:id', [LobbiesController, 'getOne']).use(middleware.auth())
+  })
+  .prefix('/lobbies')

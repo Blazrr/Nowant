@@ -9,6 +9,7 @@ export default class extends BaseSchema {
       table.integer('user_id').unsigned().references('users.id').onDelete('CASCADE')
       table.string('name').notNullable()
       table.string('map').notNullable()
+      table.string('password').nullable()
       table.timestamp('created_at')
       table.timestamp('updated_at')
     })
