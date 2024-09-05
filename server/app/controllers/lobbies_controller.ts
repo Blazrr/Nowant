@@ -10,12 +10,24 @@ export default class LobbiesController {
   }
 
   async getAll({ response }: HttpContext) {
-    const lobbies = await Lobby.query().preload('user')
+    const lobbies = await Lobby.query()
+      .preload('user')
+      .preload('participations', (query) => {
+        query.preload('user')
+      })
+
     return response.ok(lobbies)
   }
 
   async getOne({ params, response }: HttpContext) {
-    const lobby = await Lobby.query().where('id', params.id).preload('user')
+    const lobby = await Lobby.query()
+      .where('id', params.id)
+      .preload('user')
+      .preload('participations', (query) => {
+        query.preload('user')
+      })
+      .first()
+
     return response.ok(lobby)
   }
 }

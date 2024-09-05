@@ -3,6 +3,7 @@ import { middleware } from './kernel.js'
 
 const AuthController = () => import('#controllers/auth_controller')
 const LobbiesController = () => import('#controllers/lobbies_controller')
+const ParticipationsController = () => import('#controllers/participations_controller')
 
 router
   .group(() => {
@@ -20,3 +21,10 @@ router
     router.get('getOne/:id', [LobbiesController, 'getOne']).use(middleware.auth())
   })
   .prefix('/lobbies')
+
+router
+  .group(() => {
+    router.post('create', [ParticipationsController, 'create']).use(middleware.auth())
+    router.delete('delete/:id', [ParticipationsController, 'delete']).use(middleware.auth())
+  })
+  .prefix('/participations')

@@ -1,7 +1,8 @@
 import { DateTime } from 'luxon'
-import { BaseModel, belongsTo, column } from '@adonisjs/lucid/orm'
+import { BaseModel, belongsTo, column, hasMany } from '@adonisjs/lucid/orm'
 import User from './user.js'
-import type { BelongsTo } from '@adonisjs/lucid/types/relations'
+import type { BelongsTo, HasMany } from '@adonisjs/lucid/types/relations'
+import Participation from './participation.js'
 
 export default class Lobby extends BaseModel {
   @column({ isPrimary: true })
@@ -23,6 +24,11 @@ export default class Lobby extends BaseModel {
 
   @column()
   declare password: string
+
+  @hasMany(() => Participation, {
+    foreignKey: 'lobbyId',
+  })
+  declare participations: HasMany<typeof Participation>
 
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime
