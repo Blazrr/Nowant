@@ -1,3 +1,3 @@
 # Nowant
 
-![Diagramme entité relation (1)](https://github.com/user-attachments/assets/3039d547-53e0-4f6a-8f5e-e843e249a373)
+![Diagramme entité relation (2)](https://github.com/user-attachments/assets/8f6ed176-c106-42fb-91e5-718ad89787a5)
