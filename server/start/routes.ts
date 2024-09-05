@@ -19,6 +19,7 @@ router
     router.post('create', [LobbiesController, 'create']).use(middleware.auth())
     router.get('getAll', [LobbiesController, 'getAll']).use(middleware.auth())
     router.get('getOne/:id', [LobbiesController, 'getOne']).use(middleware.auth())
+    router.delete('delete/:id', [LobbiesController, 'delete']).use(middleware.auth())
   })
   .prefix('/lobbies')
 

@@ -30,4 +30,14 @@ export default class LobbiesController {
 
     return response.ok(lobby)
   }
+
+  async delete({ params, response }: HttpContext) {
+    const lobby = await Lobby.findOrFail(params.id)
+    await lobby.load('participations')
+    for (const participation of lobby?.participations) {
+      await participation.delete()
+    }
+    await lobby.delete()
+    return response.ok(lobby)
+  }
 }
