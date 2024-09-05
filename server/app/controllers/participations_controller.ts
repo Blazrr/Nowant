@@ -7,7 +7,6 @@ export default class ParticipationsController {
     const { lobbyId, userId, agent, spell, timer, x, y } = await request.validateUsing(
       createParticipationValidator
     )
-    console.log(lobbyId, userId, agent, spell, timer, x, y)
     const participation = await Participation.create({ lobbyId, userId, agent, spell, timer, x, y })
     return response.ok(participation)
   }
