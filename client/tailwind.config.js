@@ -1,8 +1,14 @@
-import type { Config } from "tailwindcss";
-import defaultTheme from "tailwindcss/defaultTheme";
-
-export default <Partial<Config>>{
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: [
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx,vue}",
+  ],
   theme: {
+    fontFamily: {
+      'orbitron': ['Orbitron', 'Sans-serif'],
+      'nunito': ['Nunito', 'Sans-serif'],
+    },
     extend: {
       colors: {
         pri: {
@@ -34,4 +40,5 @@ export default <Partial<Config>>{
       },
     },
   },
+  plugins: [],
 };

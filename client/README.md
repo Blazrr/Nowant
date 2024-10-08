@@ -1,75 +1,79 @@
-# Nuxt 3 Minimal Starter
+# electron-vite-vue
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+🥳 Really simple `Electron` + `Vue` + `Vite` boilerplate.
 
-## Setup
+<!-- [![awesome-vite](https://awesome.re/mentioned-badge.svg)](https://github.com/vitejs/awesome-vite) -->
+<!-- [![Netlify Status](https://api.netlify.com/api/v1/badges/ae3863e3-1aec-4eb1-8f9f-1890af56929d/deploy-status)](https://app.netlify.com/sites/electron-vite/deploys) -->
+<!-- [![GitHub license](https://img.shields.io/github/license/caoxiemeihao/electron-vite-vue)](https://github.com/electron-vite/electron-vite-vue/blob/main/LICENSE) -->
+<!-- [![GitHub stars](https://img.shields.io/github/stars/caoxiemeihao/electron-vite-vue?color=fa6470)](https://github.com/electron-vite/electron-vite-vue) -->
+<!-- [![GitHub forks](https://img.shields.io/github/forks/caoxiemeihao/electron-vite-vue)](https://github.com/electron-vite/electron-vite-vue) -->
+[![GitHub Build](https://github.com/electron-vite/electron-vite-vue/actions/workflows/build.yml/badge.svg)](https://github.com/electron-vite/electron-vite-vue/actions/workflows/build.yml)
+[![GitHub Discord](https://img.shields.io/badge/chat-discord-blue?logo=discord)](https://discord.gg/sRqjYpEAUK)
 
-Make sure to install the dependencies:
+## Features
 
-```bash
-# npm
+📦 Out of the box  
+🎯 Based on the official [template-vue-ts](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-vue-ts), less invasive  
+🌱 Extensible, really simple directory structure  
+💪 Support using Node.js API in Electron-Renderer  
+🔩 Support C/C++ native addons  
+🖥 It's easy to implement multiple windows  
+
+## Quick Setup
+
+```sh
+# clone the project
+git clone https://github.com/electron-vite/electron-vite-vue.git
+
+# enter the project directory
+cd electron-vite-vue
+
+# install dependency
 npm install
 
-# pnpm
-pnpm install
-
-# yarn
-yarn install
-
-# bun
-bun install
-```
-
-## Development Server
-
-Start the development server on `http://localhost:3000`:
-
-```bash
-# npm
+# develop
 npm run dev
-
-# pnpm
-pnpm run dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
 ```
 
-## Production
+## Debug
 
-Build the application for production:
+![electron-vite-react-debug.gif](https://github.com/electron-vite/electron-vite-react/blob/main/electron-vite-react-debug.gif?raw=true)
 
-```bash
-# npm
-npm run build
+## Directory
 
-# pnpm
-pnpm run build
-
-# yarn
-yarn build
-
-# bun
-bun run build
+```diff
++ ├─┬ electron
++ │ ├─┬ main
++ │ │ └── index.ts    entry of Electron-Main
++ │ └─┬ preload
++ │   └── index.ts    entry of Preload-Scripts
+  ├─┬ src
+  │ └── main.ts       entry of Electron-Renderer
+  ├── index.html
+  ├── package.json
+  └── vite.config.ts
 ```
 
-Locally preview production build:
+<!--
+## Be aware
 
-```bash
-# npm
-npm run preview
+🚨 By default, this template integrates Node.js in the Renderer process. If you don't need it, you just remove the option below. [Because it will modify the default config of Vite](https://github.com/electron-vite/vite-plugin-electron-renderer#config-presets-opinionated).
 
-# pnpm
-pnpm run preview
+```diff
+# vite.config.ts
 
-# yarn
-yarn preview
-
-# bun
-bun run preview
+export default {
+  plugins: [
+-   // Use Node.js API in the Renderer-process
+-   renderer({
+-     nodeIntegration: true,
+-   }),
+  ],
+}
 ```
+-->
 
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+## FAQ
+
+- [C/C++ addons, Node.js modules - Pre-Bundling](https://github.com/electron-vite/vite-plugin-electron-renderer#dependency-pre-bundling)
+- [dependencies vs devDependencies](https://github.com/electron-vite/vite-plugin-electron-renderer#dependencies-vs-devdependencies)
