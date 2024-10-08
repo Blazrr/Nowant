@@ -12,10 +12,8 @@
             step === 1 && 'rounded-lg bg-sec-500',
           ]"
         >
-          <UIcon
-            name="i-heroicons-check-circle"
-            :class="['w-6 h-6', step >= 2 && 'text-sec-500']"
-          />
+          <i :class="['pi pi-check-circle', step >= 2 && 'text-sec-500']"></i>
+
           <div class="flex-col">
             <h2 class="font-bold">Your details</h2>
             <p class="text-sm">Provide your user details</p>
@@ -27,10 +25,8 @@
             step === 2 && 'rounded-lg bg-sec-500',
           ]"
         >
-          <UIcon
-            name="i-heroicons-check-circle"
-            :class="['w-6 h-6', step === 3 && 'text-sec-500']"
-          />
+          <i :class="['pi pi-check-circle', step === 3 && 'text-sec-500']"></i>
+
           <div class="flex-col">
             <h2 class="font-bold">Your profile picture</h2>
             <p class="text-sm">Upload your profile picture</p>
@@ -42,7 +38,7 @@
             step === 3 && 'rounded-lg bg-sec-500',
           ]"
         >
-          <UIcon name="i-heroicons-check-circle" />
+          <i :class="['pi pi-check-circle']"></i>
           <div class="flex-col">
             <h2 class="font-bold">Your game settings</h2>
             <p class="text-sm">Configure your game settings</p>
