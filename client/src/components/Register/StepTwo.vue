@@ -6,7 +6,7 @@
     >
       PROFILE PICTURE
     </h1>
-    <div class="flex flex-col items-center mt-16 space-y-4">
+    <div class="flex flex-col items-center mt-16 space-y-16">
       <label for="upload-photo">Choose your new profile picture</label>
       <input
         type="file"
@@ -19,7 +19,7 @@
         <img
           :src="imageUrl"
           alt="Selected Image"
-          class="max-w-xs h-[150px] w-[150px] rounded-full"
+          class="max-w-xs h-[300px] w-[300px] rounded-full"
         />
       </div>
       <Button
@@ -41,6 +41,7 @@ const toast = useToast();
 const selectedFile = ref<File | null>(null);
 const imageUrl = ref<string | null>(null);
 const userStore = useUserStore();
+const emit = defineEmits(["handleStep"]);
 
 const onFileChange = (e: Event) => {
   const target = e.target as HTMLInputElement;
@@ -79,7 +80,6 @@ const onFileChange = (e: Event) => {
 };
 
 const upload = async () => {
-  console.log(userStore.token);
   try {
     const formData = new FormData();
     formData.append("file", selectedFile.value!);
@@ -94,6 +94,7 @@ const upload = async () => {
       }
     );
     const data = await res.json();
+    emit("handleStep", 3);
     console.log(data);
   } catch (error) {
     console.error(error);

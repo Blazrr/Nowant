@@ -1,10 +1,9 @@
 import type { HttpContext } from '@adonisjs/core/http'
 import { cuid } from '@adonisjs/core/helpers'
+import User from '#models/user'
 
 export default class UsersController {
-  async picture({ request, response, params }: HttpContext) {
-    const { id } = params
-    console.log(id)
+  async picture({ request, response }: HttpContext) {
     const file = request.file('file', {
       size: '2mb',
       extnames: ['jpg', 'jpeg', 'png', 'gif'],
@@ -18,6 +17,10 @@ export default class UsersController {
         overwrite: true,
       })
 
+      const user = await User.findOrFail(request.all().userId)
+      ;(user.profile as Record<string, unknown>)['picture'] = `/uploads/${file!.fileName}`
+
+      await user.save()
       return response.ok({
         message: 'File uploaded successfully',
         fileName: file!.fileName,
