@@ -94,8 +94,8 @@ const upload = async () => {
       }
     );
     const data = await res.json();
-    emit("handleStep", 3);
     console.log(data);
+    emit("handleStep", 3);
   } catch (error) {
     console.error(error);
   }
