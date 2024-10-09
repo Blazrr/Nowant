@@ -4,6 +4,7 @@ import { middleware } from './kernel.js'
 const AuthController = () => import('#controllers/auth_controller')
 const LobbiesController = () => import('#controllers/lobbies_controller')
 const ParticipationsController = () => import('#controllers/participations_controller')
+const UserController = () => import('#controllers/users_controller')
 
 router
   .group(() => {
@@ -29,3 +30,9 @@ router
     router.delete('delete/:id', [ParticipationsController, 'delete']).use(middleware.auth())
   })
   .prefix('/participations')
+
+router
+  .group(() => {
+    router.post('picture', [UserController, 'picture']).use(middleware.auth())
+  })
+  .prefix('/user')

@@ -3,7 +3,8 @@ import { createRequire } from "node:module";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
 import os from "node:os";
-
+import { getToken, setToken } from "../utils/electronStore";
+import { registerIpcHandlers } from "../utils/ipcRequests";
 const require = createRequire(import.meta.url);
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -121,3 +122,5 @@ ipcMain.handle("open-win", (_, arg) => {
     childWindow.loadFile(indexHtml, { hash: arg });
   }
 });
+
+registerIpcHandlers();

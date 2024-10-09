@@ -5,6 +5,7 @@ import { createPinia } from "pinia";
 import PrimeVue from "primevue/config";
 import Nora from "@primevue/themes/nora";
 import Material from "@primevue/themes/material";
+import ToastService from "primevue/toastservice";
 
 import "./style.scss";
 
@@ -32,6 +33,7 @@ const MyPreset = definePreset(Nora, {
 createApp(App)
   .use(router)
   .use(pinia)
+  .use(ToastService)
   .use(PrimeVue, {
     theme: {
       preset: MyPreset,

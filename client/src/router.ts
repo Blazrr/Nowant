@@ -1,5 +1,5 @@
 import { createMemoryHistory, createRouter } from "vue-router";
-import { useAuthMiddleware } from "./middleware/auth";
+import { useAuthMiddleware } from "./middleware/auth.middleware";
 
 import Register from "./pages/register.vue";
 import Index from "./pages/index.vue";

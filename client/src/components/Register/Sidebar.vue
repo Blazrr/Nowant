@@ -48,12 +48,15 @@
     </div>
 
     <div class="flex justify-end">
-      <span class="cursor-pointer text-sec-500 underline">Skip</span>
+      <RouterLink class="cursor-pointer text-sec-500 underline" to="/"
+        >Skip</RouterLink
+      >
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import { RouterLink } from "vue-router";
 defineProps({
   step: {
     type: Number,
