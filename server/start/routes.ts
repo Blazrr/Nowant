@@ -34,5 +34,6 @@ router
 router
   .group(() => {
     router.post('picture', [UserController, 'picture']).use(middleware.auth())
+    router.post('settings', [UserController, 'settings']).use(middleware.auth())
   })
   .prefix('/user')

@@ -4,7 +4,7 @@
   ></div>
   <div class="flex-col w-[30%] p-4 h-screen justify-between flex z-10">
     <div>
-      <h1 class="text-xl font-extrabold text-sec-500">NOWANT</h1>
+      <h1 class="text-xl font-extrabold text-sec-500 font-orbitron">NOWANT</h1>
       <div class="mt-24 flex flex-col space-y-8">
         <div
           :class="[
@@ -48,7 +48,10 @@
     </div>
 
     <div class="flex justify-end">
-      <RouterLink class="cursor-pointer text-sec-500 underline" to="/"
+      <RouterLink
+        class="cursor-pointer text-sec-500 underline"
+        v-if="step >= 2"
+        to="/"
         >Skip</RouterLink
       >
     </div>
@@ -64,9 +67,3 @@ defineProps({
   },
 });
 </script>
-
-<style scoped>
-h1 {
-  font-family: "Orbitron", sans-serif;
-}
-</style>

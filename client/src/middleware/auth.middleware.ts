@@ -18,17 +18,21 @@ export const useAuthMiddleware = (router: Router) => {
   router.beforeEach(async (to, from, next) => {
     const userStore = useUserStore();
     const token = await window.ipcRenderer.invoke("getToken");
-    userStore.setToken(token);
     if (token) {
+      userStore.setToken(token);
       const user = await fetchDatabyToken(token);
       if (user) {
-        console.log(user);
         userStore.isLoggedIn = true;
         userStore.setUser(user);
       }
     }
-    if (!userStore.isLoggedIn && to.path !== "/register") {
-      return next({ name: "register" });
+    if (
+      !userStore.isLoggedIn &&
+      to.path !== "/register" &&
+      to.path !== "/login" &&
+      to.path !== "/overlay"
+    ) {
+      return next({ name: "login" });
     }
     next();
   });

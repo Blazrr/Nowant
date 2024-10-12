@@ -61,10 +61,7 @@ async function createWindow() {
   });
 
   if (VITE_DEV_SERVER_URL) {
-    // #298
     win.loadURL(VITE_DEV_SERVER_URL);
-    // Open devTool if the app is not packaged
-    win.webContents.openDevTools();
   } else {
     win.loadFile(indexHtml);
   }
@@ -105,22 +102,26 @@ app.on("activate", () => {
     createWindow();
   }
 });
+let childWindow: BrowserWindow | null = null;
 
 // New window example arg: new windows url
-ipcMain.handle("open-win", (_, arg) => {
-  const childWindow = new BrowserWindow({
+ipcMain.on("open-overlay", (_, arg) => {
+  childWindow = new BrowserWindow({
     webPreferences: {
       preload,
-      nodeIntegration: true,
-      contextIsolation: false,
     },
   });
 
   if (VITE_DEV_SERVER_URL) {
-    childWindow.loadURL(`${VITE_DEV_SERVER_URL}#${arg}`);
+    childWindow.loadURL(`${VITE_DEV_SERVER_URL}overlay`);
   } else {
-    childWindow.loadFile(indexHtml, { hash: arg });
+    childWindow.loadFile(indexHtml, { hash: "overlay" });
   }
+});
+
+ipcMain.on("close-overlay", (_, arg) => {
+  console.log("close overlay");
+  childWindow.close();
 });
 
 registerIpcHandlers();

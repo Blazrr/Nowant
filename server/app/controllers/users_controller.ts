@@ -9,22 +9,17 @@ export default class UsersController {
       size: '2mb',
       extnames: ['jpg', 'jpeg', 'png', 'gif'],
     })
-
     if (!file) {
       return response.badRequest({ message: 'No file uploaded' })
     }
-
     const fileName = `${cuid()}.${file.extname}`
-
     try {
       await file.move('./public/assets', {
         name: fileName,
         overwrite: true,
       })
-
       const userId = request.input('userId')
       const user = await User.findOrFail(userId)
-
       if (user.profile?.picture) {
         const oldPicturePath = `./public/${user.profile.picture}`
 
@@ -36,10 +31,11 @@ export default class UsersController {
         }
       }
 
+      if (!user.profile) {
+        user.profile = {}
+      }
       ;(user.profile as Record<string, unknown>)['picture'] = `assets/${file.fileName}`
-
       await user.save()
-
       return response.ok({
         message: 'File uploaded successfully',
         fileName: file.fileName,
@@ -52,5 +48,16 @@ export default class UsersController {
         error: error.message,
       })
     }
+  }
+
+  async settings({ request, response }: HttpContext) {
+    const { userId, ...newSettings } = request.all()
+    const user = await User.findOrFail(userId)
+    console.log(newSettings)
+    user.profile = user.profile ?? {}
+    user.profile.settings = newSettings
+    console.log(user)
+    await user.save()
+    return response.ok(user)
   }
 }

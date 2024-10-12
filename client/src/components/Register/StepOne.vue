@@ -1,5 +1,5 @@
 <template>
-  <div class="flex w-full flex-col">
+  <div class="flex w-full flex-col flex-1">
     <Toast />
     <h1
       class="mx-auto mt-12 text-5xl font-extrabold text-sec-500 font-orbitron"
@@ -54,6 +54,9 @@
       </IftaLabel>
 
       <Button label="Register" type="submit" class="w-[200px]" />
+      <RouterLink to="/login" class="text-sec-500 underline cursor-pointer">
+        Already have an account? Login
+      </RouterLink>
     </form>
   </div>
 </template>
@@ -66,13 +69,14 @@ import Toast from "primevue/toast";
 import { useToast } from "primevue/usetoast";
 import { reactive } from "vue";
 import { object, string, ref, ValidationError } from "yup";
+import { useUserStore } from "../../store/userStore";
 
 const passwordRules = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
 const state = reactive({
-  username: "sami3",
-  email: "sami@sami.fr",
-  password: "Sami93110!",
-  confirmPassword: "Sami93110!",
+  username: undefined,
+  email: undefined,
+  password: undefined,
+  confirmPassword: undefined,
 });
 const schema = object({
   username: string().required("Username is required"),
@@ -120,6 +124,7 @@ const register = async (e: Event) => {
       throw new Error(JSON.stringify(data));
     }
     window.ipcRenderer.send("setToken", data.token.token);
+    await useUserStore().setToken(data.token.token);
     return emit("handleStep", 2);
   } catch (err: unknown) {
     console.error(err);

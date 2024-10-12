@@ -1,5 +1,5 @@
 <template>
-  <div class="flex w-full flex-col items">
+  <div class="flex w-full flex-col items flex-1">
     <Toast />
     <h1
       class="mx-auto mt-12 text-5xl font-extrabold text-sec-500 font-orbitron"
@@ -15,7 +15,7 @@
         @change="onFileChange"
         accept="image/*"
       />
-      <div v-if="imageUrl" class="mt-8">
+      <div class="mt-8">
         <img
           :src="imageUrl"
           alt="Selected Image"
@@ -32,16 +32,38 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { onMounted, ref, watchEffect } from "vue";
 import Toast from "primevue/toast";
 import { useToast } from "primevue/usetoast";
 import Button from "primevue/button";
 import { useUserStore } from "../../store/userStore";
+const userStore = useUserStore();
 const toast = useToast();
 const selectedFile = ref<File | null>(null);
-const imageUrl = ref<string | null>(null);
-const userStore = useUserStore();
 const emit = defineEmits(["handleStep"]);
+const imageUrl = ref<string>(
+  `${import.meta.env.VITE_BACKEND_URL}/assets/default.jpg`
+);
+
+watchEffect(() => {
+  if (userStore.user?.profile?.picture) {
+    imageUrl.value = `${import.meta.env.VITE_BACKEND_URL}/${
+      userStore.user.profile.picture
+    }`;
+  }
+});
+
+onMounted(() => {
+  setTimeout(() => {
+    toast.add({
+      severity: "success",
+      summary: "Successfully registered!",
+      detail:
+        "You have successfully registered. Please upload your profile picture or skip.",
+      life: 5000,
+    });
+  }, 200);
+});
 
 const onFileChange = (e: Event) => {
   const target = e.target as HTMLInputElement;
@@ -56,7 +78,6 @@ const onFileChange = (e: Event) => {
         life: 3000,
       });
       selectedFile.value = null;
-      imageUrl.value = null;
       return;
     }
 
@@ -74,7 +95,6 @@ const onFileChange = (e: Event) => {
         life: 3000,
       });
       selectedFile.value = null;
-      imageUrl.value = null;
     }
   }
 };
@@ -105,7 +125,6 @@ const upload = async () => {
 <style scoped>
 label {
   cursor: pointer;
-  /* Style as you please, it will become the visible UI component. */
 }
 
 #upload-photo {

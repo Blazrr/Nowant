@@ -1,21 +1,15 @@
 <template>
   <RouterView />
-  <button @click="logout">logout</button>
-  <StepTwo />
 </template>
 
 <script setup lang="ts">
-import { RouterView } from "vue-router";
-
 import { onMounted } from "vue";
-import StepOne from "./components/Register/StepOne.vue";
-import { useRouter } from "vue-router";
-import StepTwo from "./components/Register/StepTwo.vue";
-const router = useRouter();
-
-const logout = () => {
-  window.ipcRenderer.send("logout");
-  router.push({ name: "register" });
-};
+import { RouterView } from "vue-router";
+onMounted(() => {
+  console.log(window.ipcRenderer);
+  window.ipcRenderer.on("update-store", (event, data) => {
+    console.log(data);
+  });
+});
 </script>
 <style></style>
