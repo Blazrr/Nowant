@@ -5,6 +5,7 @@ import path from "node:path";
 import os from "node:os";
 import { getToken, setToken } from "../utils/electronStore";
 import { registerIpcHandlers } from "../utils/ipcRequests";
+import { registerStoreUpdater } from "../utils/storeUpdater";
 const require = createRequire(import.meta.url);
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -39,12 +40,12 @@ if (!app.requestSingleInstanceLock()) {
   process.exit(0);
 }
 
-let win: BrowserWindow | null = null;
+let mainWindow: BrowserWindow | null = null;
 const preload = path.join(__dirname, "../preload/index.mjs");
 const indexHtml = path.join(RENDERER_DIST, "index.html");
 
 async function createWindow() {
-  win = new BrowserWindow({
+  mainWindow = new BrowserWindow({
     title: "Main window",
     icon: path.join(process.env.VITE_PUBLIC, "favicon.ico"),
     width: 1024,
@@ -61,36 +62,39 @@ async function createWindow() {
   });
 
   if (VITE_DEV_SERVER_URL) {
-    win.loadURL(VITE_DEV_SERVER_URL);
+    mainWindow.loadURL(VITE_DEV_SERVER_URL);
   } else {
-    win.loadFile(indexHtml);
+    mainWindow.loadFile(indexHtml);
   }
 
   // Test actively push message to the Electron-Renderer
-  win.webContents.on("did-finish-load", () => {
-    win?.webContents.send("main-process-message", new Date().toLocaleString());
+  mainWindow.webContents.on("did-finish-load", () => {
+    mainWindow?.webContents.send(
+      "main-process-message",
+      new Date().toLocaleString()
+    );
   });
 
   // Make all links open with the browser, not with the application
-  win.webContents.setWindowOpenHandler(({ url }) => {
+  mainWindow.webContents.setWindowOpenHandler(({ url }) => {
     if (url.startsWith("https:")) shell.openExternal(url);
     return { action: "deny" };
   });
-  // win.webContents.on('will-navigate', (event, url) => { }) #344
+  // mainWindow.webContents.on('will-navigate', (event, url) => { }) #344
 }
 
 app.whenReady().then(createWindow);
 
 app.on("window-all-closed", () => {
-  win = null;
+  mainWindow = null;
   if (process.platform !== "darwin") app.quit();
 });
 
 app.on("second-instance", () => {
-  if (win) {
+  if (mainWindow) {
     // Focus on the main window if the user tried to open another
-    if (win.isMinimized()) win.restore();
-    win.focus();
+    if (mainWindow.isMinimized()) mainWindow.restore();
+    mainWindow.focus();
   }
 });
 
@@ -111,9 +115,8 @@ ipcMain.on("open-overlay", (_, arg) => {
       preload,
     },
   });
-
   if (VITE_DEV_SERVER_URL) {
-    childWindow.loadURL(`${VITE_DEV_SERVER_URL}overlay`);
+    childWindow.loadURL("http://localhost:5173#/overlay");
   } else {
     childWindow.loadFile(indexHtml, { hash: "overlay" });
   }
@@ -124,4 +127,4 @@ ipcMain.on("close-overlay", (_, arg) => {
   childWindow.close();
 });
 
-registerIpcHandlers();
+registerStoreUpdater(childWindow);
