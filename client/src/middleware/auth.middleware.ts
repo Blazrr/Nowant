@@ -17,9 +17,7 @@ export const useAuthMiddleware = (router: Router) => {
   };
   router.beforeEach(async (to, from, next) => {
     const userStore = useUserStore();
-    console.log(1);
     const token = await window.ipcRenderer.invoke("getToken");
-    console.log(2);
     if (token) {
       userStore.setToken(token);
       const user = await fetchDatabyToken(token);

@@ -128,6 +128,5 @@ ipcMain.on("close-overlay", (_, arg) => {
 
 ipcMain.on("update-lobby-store", (event, arg) => {
   childWindow?.webContents.send("update-lobby-store", arg);
-  // console.log(BrowserWindow.getAllWindows()[1]);
 });
 registerIpcHandlers();
