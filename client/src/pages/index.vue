@@ -1,6 +1,7 @@
 <template>
   <div class="flex">
     <button @click="logout">logout</button>
+    <input type="text" v-model="name" />
     <button @click="logName">logName</button>
   </div>
 </template>
@@ -8,14 +9,14 @@
 <script setup lang="ts">
 import { useRouter } from "vue-router";
 import { useOverlayStore } from "../store/overlayStore";
-import { onMounted } from "vue";
+import { onMounted, ref } from "vue";
 import { useUserStore } from "../store/userStore";
 import { useLobbyStore } from "../store/lobbyStore";
 
 const router = useRouter();
 const overlayStore = useOverlayStore();
-const userStore = useUserStore();
 const lobbyStore = useLobbyStore();
+const name = ref("");
 
 onMounted(() => {
   if (!overlayStore.isOpen) {
@@ -24,8 +25,9 @@ onMounted(() => {
 });
 
 const logName = () => {
-  lobbyStore.setName("secondValue");
+  lobbyStore.setName(name.value);
 };
+
 const logout = () => {
   window.ipcRenderer.send("logout");
   router.push({ name: "login" });

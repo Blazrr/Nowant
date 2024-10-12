@@ -1,15 +1,19 @@
 <template>
-  <div>dadaw</div>
+  <div>{{ lobbyStore.lobby }}</div>
 </template>
 
 <script setup lang="ts">
 import { onMounted } from "vue";
+import { useLobbyStore } from "../store/lobbyStore";
 
-onMounted(() => {
-  window.ipcRenderer.on("update-lobby-store", (event, data) => {
-    console.log(data, "dada");
-  });
-});
+const lobbyStore = useLobbyStore();
+
+// onMounted(() => {
+//   window.ipcRenderer.on("update-lobby-store", (event, data) => {
+//     lobbyStore.setLobby(data);
+//     console.log(data, "dada");
+//   });
+// });
 </script>
 
 <style scoped></style>

@@ -3,9 +3,8 @@ import { createRequire } from "node:module";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
 import os from "node:os";
-import { getToken, setToken } from "../utils/electronStore";
-import { registerIpcHandlers } from "../utils/ipcRequests";
 import { registerStoreUpdater } from "../utils/storeUpdater";
+import { registerIpcHandlers } from "../utils/ipcRequests";
 const require = createRequire(import.meta.url);
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -127,4 +126,8 @@ ipcMain.on("close-overlay", (_, arg) => {
   childWindow.close();
 });
 
-registerStoreUpdater(childWindow);
+ipcMain.on("update-lobby-store", (event, arg) => {
+  childWindow?.webContents.send("update-lobby-store", arg);
+  // console.log(BrowserWindow.getAllWindows()[1]);
+});
+registerIpcHandlers();
