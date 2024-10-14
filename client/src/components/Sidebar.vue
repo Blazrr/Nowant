@@ -7,7 +7,7 @@
       <div class="pt-16 px-8">
         <h2 class="mt-16 font-extrabold">WHATS NEW ?</h2>
       </div>
-      <div class="flex flex-col justify-between space-y-4 px-8 pb-24">
+      <div class="flex flex-col justify-between space-y-4 px-8 pb-16">
         <RouterLink
           to="/settings"
           :class="[
@@ -15,10 +15,34 @@
             router.currentRoute.value.name === 'settings' && 'text-sec-500',
           ]"
         >
+          <i
+            :class="[
+              'h-4 w-[2px] transition-all',
+              router.currentRoute.value.name === 'settings' && 'bg-sec-500',
+            ]"
+          ></i>
           <i class="pi pi-cog"></i>
           <span>Settings</span>
         </RouterLink>
+
+        <RouterLink
+          to="/help"
+          :class="[
+            'flex items-center space-x-2 hover:text-sec-400 active:text-sec-500 transition-all cursor-pointer',
+            router.currentRoute.value.name === 'help' && 'text-sec-500',
+          ]"
+        >
+          <i
+            :class="[
+              'h-4 w-[2px] transition-all',
+              router.currentRoute.value.name === 'help' && 'bg-sec-500',
+            ]"
+          ></i>
+          <i class="pi pi-question-circle"></i>
+          <span>Help</span>
+        </RouterLink>
         <div class="flex items-center space-x-2">
+          <i :class="['h-4 w-[2px] transition-all']"></i>
           <i class="pi pi-sign-out"></i>
           <span to="/login" @click="logout" class="cursor-pointer">Logout</span>
         </div>
