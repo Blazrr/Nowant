@@ -6,7 +6,7 @@
     >
       GAME SETTINGS
     </h1>
-    <MapSettings ref="mapSettings" />
+    <MapSettings ref="mapSettings" class="mt-12" />
     <Button
       label="Save settings"
       class="w-[200px] flex mx-auto mt-8"

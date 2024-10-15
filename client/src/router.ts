@@ -7,6 +7,8 @@ import Login from "./pages/login.vue";
 import Overlay from "./pages/overlay.vue";
 import Settings from "./pages/settings.vue";
 import Help from "./pages/help.vue";
+import Create from "./pages/create.vue";
+import Lobbies from "./pages/lobbies.vue";
 
 const routes = [
   { path: "/", component: Index, name: "index" },
@@ -15,6 +17,8 @@ const routes = [
   { path: "/overlay", component: Overlay, name: "overlay" },
   { path: "/settings", component: Settings, name: "settings" },
   { path: "/help", component: Help, name: "help" },
+  { path: "/create", component: Create, name: "create" },
+  { path: "/lobbies", component: Lobbies, name: "lobbies" },
 ];
 
 export const router = createRouter({

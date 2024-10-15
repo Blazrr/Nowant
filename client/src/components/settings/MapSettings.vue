@@ -1,5 +1,5 @@
 <template>
-  <div class="flex items-center justify-center mt-12 flex-col">
+  <div class="flex items-center justify-center flex-col">
     <span class="text-center font-orbitron font-bold">MAP SETTINGS</span>
     <div class="flex items-center">
       <Checkbox
