@@ -1,7 +1,7 @@
 <template>
   <DefaultLayout>
-    <div class="flex flex-col flex-1 px-4">
-      <div class="flex items-center gap-x-4 h-[300px]">
+    <div class="flex flex-col flex-1 h-full">
+      <div class="flex items-center gap-x-4 flex-1">
         <RouterLink
           to="/lobbies"
           :class="[
@@ -32,14 +32,19 @@
           <div class="flex h-1/2 gap-x-4">
             <div
               class="flex-1 rounded-lg bg-cover bg-center"
-              :style="{ backgroundImage: `url(${lastMap.splash})` }"
+              :style="{ backgroundImage: `url(${lastMap?.splash})` }"
             ></div>
             <div
               class="flex-1 bg-blue-200 rounded-lg bg-cover bg-center"
-              :style="{ backgroundImage: `url(${lastAgent.displayIcon})` }"
+              :style="{ backgroundImage: `url(${lastAgent?.displayIcon})` }"
             ></div>
           </div>
         </div>
+      </div>
+      <div
+        class="flex-1 bg-indigo-100 w-full rounded-lg font-orbitron text-5xl text-sec-500 font-extrabold flex items-center justify-center"
+      >
+        COMING SOON
       </div>
     </div>
 

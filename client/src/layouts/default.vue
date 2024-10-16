@@ -2,8 +2,8 @@
   <div class="flex">
     <Sidebar />
     <div class="flex flex-col flex-1">
-      <Navbar />
-      <div class="ml-[200px] mt-[100px]">
+      <Navbar @search-value="$emit('search-value', $event)" />
+      <div class="ml-[200px] mt-[50px] h-[calc(100vh-50px)] py-4 pr-4">
         <slot />
       </div>
     </div>

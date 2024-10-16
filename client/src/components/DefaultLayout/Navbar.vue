@@ -1,14 +1,22 @@
 <template>
   <div
-    class="flex items-center justify-between p-4 fixed top-0 left-[200px] backdrop-blur-md w-[calc(100%-200px)]"
+    class="flex items-center justify-between mt-4 fixed top-0 left-[200px] w-[calc(100%-200px)] pr-4"
   >
-    <div></div>
+    <div class="h-[42px]">
+      <div class="" v-if="router.currentRoute.value.name === 'lobbies'">
+        <InputText
+          type="text"
+          placeholder="lobby name"
+          @input="$emit('search-value', $event.target.value)"
+        />
+      </div>
+    </div>
     <div
       class="flex space-x-4 items-center cursor-pointer hover:text-sec-400 active:text-sec-500 transition-all"
       @click="toggle"
     >
       <img :src="profilePictureUrl" alt="" class="h-10 w-10 rounded-full" />
-      <span>{{ userStore.user.username }}</span>
+      <span>{{ userStore?.user?.username }}</span>
       <i class="pi pi-angle-down"></i>
     </div>
     <Popover ref="op">
@@ -57,6 +65,7 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
+import InputText from "primevue/inputtext";
 import { useUserStore } from "../../store/userStore";
 import Popover from "primevue/popover";
 import { RouterLink } from "vue-router";
@@ -65,7 +74,9 @@ import { useOverlayStore } from "../../store/overlayStore";
 
 const router = useRouter();
 const userStore = useUserStore();
-const profilePictureUrl = `${import.meta.env.VITE_BACKEND_URL}/${userStore.user?.profile.picture}`;
+const profilePictureUrl = `${import.meta.env.VITE_BACKEND_URL}/${
+  userStore.user?.profile?.picture
+}`;
 const overlayStore = useOverlayStore();
 
 const logout = () => {

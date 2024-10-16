@@ -25,6 +25,7 @@
     "preview": "vite preview"
   },
   "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
     "@vitejs/plugin-vue": "^5.0.4",
     "autoprefixer": "^10.4.20",
     "electron": "^29.1.1",
@@ -41,8 +42,11 @@
   },
   "dependencies": {
     "@primevue/themes": "^4.1.0",
+    "bcrypt": "^5.1.1",
+    "bcryptjs": "^2.4.3",
     "electron-store": "^10.0.0",
     "i": "^0.3.7",
+    "install": "^0.13.0",
     "npm": "^10.9.0",
     "pinia": "^2.2.4",
     "primeicons": "^7.0.0",

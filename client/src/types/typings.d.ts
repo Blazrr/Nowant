@@ -77,3 +77,18 @@ export type Agent = {
   abilities: Ability[];
   voiceLine: any | null;
 };
+
+export type Participation = {
+  timer: number;
+};
+
+export type Lobby = {
+  id: number;
+  name: string;
+  map: string;
+  participations: Participation[];
+  user: User;
+  password: string;
+  createdAt: string;
+  updatedAt: string;
+};

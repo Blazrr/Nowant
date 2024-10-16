@@ -1,9 +1,9 @@
 <template>
   <DefaultLayout>
     <Toast />
-    <div class="px-4 flex flex-col h-full gap-4">
+    <div class="p-4 flex flex-col gap-4 h-full">
       <div
-        class="bg-cover bg-center h-full w-full rounded-lg p-4 relative"
+        class="bg-cover bg-center flex-1 w-full rounded-lg p-4 relative"
         :style="{
           backgroundImage: `url(${selectedMap.splash})`,
         }"
@@ -32,7 +32,7 @@
         </div>
       </div>
 
-      <div class="grid grid-rows-3 grid-flow-col gap-4 h-[600px]">
+      <div class="grid grid-rows-3 grid-flow-col gap-4 flex-1">
         <template v-for="map in apiStore.maps">
           <div
             @click="selectedMap = map"
@@ -71,7 +71,7 @@ import { useUserStore } from "../store/userStore";
 import { useToast } from "primevue/usetoast";
 import Toast from "primevue/toast";
 import { ValidationError } from "yup";
-import argon2 from "argon2-browser";
+import bcrypt from "bcryptjs";
 const toast = useToast();
 
 const state = reactive({
@@ -86,9 +86,9 @@ const selectedMap = ref<Map>(
 );
 
 const create = async () => {
+  const salt = bcrypt.genSaltSync(10);
+  const hash = bcrypt.hashSync(state.password, salt);
   try {
-    const password = await argon2.hash({ pass: state.password });
-    console.log(password);
     const response = await fetch(
       `${import.meta.env.VITE_BACKEND_URL}/lobbies/create`,
       {
@@ -100,7 +100,7 @@ const create = async () => {
         body: JSON.stringify({
           map: selectedMap.value.displayName,
           name: state.name,
-          password,
+          password: state?.password ? hash : "",
         }),
       }
     );
