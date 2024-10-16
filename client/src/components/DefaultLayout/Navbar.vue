@@ -2,7 +2,7 @@
   <div
     class="flex items-center justify-between p-4 fixed top-0 left-[200px] backdrop-blur-md w-[calc(100%-200px)]"
   >
-    <div>idk</div>
+    <div></div>
     <div
       class="flex space-x-4 items-center cursor-pointer hover:text-sec-400 active:text-sec-500 transition-all"
       @click="toggle"

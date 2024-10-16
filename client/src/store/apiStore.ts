@@ -9,7 +9,13 @@ export const useApiStore = defineStore("api", () => {
     console.log("fetching");
     const response = await fetch(`https://valorant-api.com/v1/${toFetch}`);
     const data = await response.json();
-    toFetch === "maps" ? (maps.value = data.data) : (agents.value = data.data);
+    toFetch === "maps"
+      ? (maps.value = data.data.filter(
+          (map) =>
+            map.tacticalDescription === "A/B Sites" ||
+            map.tacticalDescription === "A/B/C Sites"
+        ))
+      : (agents.value = data.data);
   };
   onMounted(() => {
     const toFetch = ["maps", "agents"] as const;
