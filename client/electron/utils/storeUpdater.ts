@@ -11,6 +11,5 @@ export const registerStoreUpdater = () => {
       "update-lobby-store",
       arg
     );
-    // console.log(BrowserWindow.getAllWindows()[1]);
   });
 };

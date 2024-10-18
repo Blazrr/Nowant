@@ -152,7 +152,6 @@ const handleSelectedData = (data: {
 };
 
 const addCoordinates = () => {
-  console.log(x.value, y.value);
   placeAbility.value = {
     x: x.value,
     y: y.value,

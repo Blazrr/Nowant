@@ -13,8 +13,7 @@ export const useLobbyStore = defineStore("lobby", () => {
   onMounted(() => {
     if (isOverlayWindow.value) {
       window.ipcRenderer.on("update-lobby-store", (_, data) => {
-        lobby.value = data;
-        console.log("lobby updated", lobby.value);
+        lobby.value = JSON.parse(data);
       });
     }
   });

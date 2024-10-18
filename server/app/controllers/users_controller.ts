@@ -25,7 +25,6 @@ export default class UsersController {
 
         if (fs.existsSync(oldPicturePath)) {
           fs.unlinkSync(oldPicturePath)
-          console.log('Old picture deleted:', oldPicturePath)
         } else {
           console.warn('Old picture not found:', oldPicturePath)
         }
@@ -53,10 +52,8 @@ export default class UsersController {
   async settings({ request, response }: HttpContext) {
     const { userId, ...newSettings } = request.all()
     const user = await User.findOrFail(userId)
-    console.log(newSettings)
     user.profile = user.profile ?? {}
     user.profile.settings = newSettings
-    console.log(user)
     await user.save()
     return response.ok(user)
   }
