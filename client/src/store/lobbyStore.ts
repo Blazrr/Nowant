@@ -1,22 +1,20 @@
 import { defineStore } from "pinia";
 import { computed, onMounted, ref, watch } from "vue";
 import { useOverlayStore } from "./overlayStore";
+import { Lobby } from "../types/typings";
 
 export const useLobbyStore = defineStore("lobby", () => {
-  const lobby = ref("init");
+  const lobby = ref<Lobby | null>();
 
   const overlayStore = useOverlayStore();
   const isOverlayWindow = computed(() => !overlayStore.isOpen);
-
-  const setName = (newName: string) => {
-    lobby.value = newName;
-  };
 
   // This is a watcher that listens for updates from the main process
   onMounted(() => {
     if (isOverlayWindow.value) {
       window.ipcRenderer.on("update-lobby-store", (_, data) => {
         lobby.value = data;
+        console.log("lobby updated", lobby.value);
       });
     }
   });
@@ -27,5 +25,5 @@ export const useLobbyStore = defineStore("lobby", () => {
       window.ipcRenderer.send("update-lobby-store", JSON.stringify(newVal));
     }
   });
-  return { lobby, setName };
+  return { lobby };
 });

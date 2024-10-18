@@ -90,7 +90,6 @@ const login = async (e: Event) => {
       }
     );
     const data = await response.json();
-    console.log(data);
     if (!data.token) {
       throw new Error(JSON.stringify(data));
     }

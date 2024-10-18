@@ -6,16 +6,17 @@ export const useApiStore = defineStore("api", () => {
   const maps = ref<Map[]>([]);
   const agents = ref<Agent[]>([]);
   const fetchValorantApi = async (toFetch: "maps" | "agents") => {
-    console.log("fetching");
     const response = await fetch(`https://valorant-api.com/v1/${toFetch}`);
     const data = await response.json();
     toFetch === "maps"
       ? (maps.value = data.data.filter(
-          (map) =>
+          (map: Map) =>
             map.tacticalDescription === "A/B Sites" ||
             map.tacticalDescription === "A/B/C Sites"
         ))
-      : (agents.value = data.data);
+      : (agents.value = data.data.filter(
+          (agent: Agent) => agent.isPlayableCharacter
+        ));
   };
   onMounted(() => {
     const toFetch = ["maps", "agents"] as const;

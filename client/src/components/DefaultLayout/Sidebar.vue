@@ -1,5 +1,5 @@
 <template>
-  <div class="p-4 flex h-screen flex-col fixed">
+  <div class="p-4 flex h-screen flex-col fixed w-[189px]">
     <RouterLink to="/" class="text-xl font-extrabold text-sec-500 font-orbitron"
       >NOWANT</RouterLink
     >
@@ -41,13 +41,13 @@
           to="/create"
           :class="[
             'flex items-center space-x-2 hover:text-sec-400 active:text-sec-500 transition-all cursor-pointer',
-            router.currentRoute.value.name === 'create' && 'text-sec-500',
+            router.currentRoute.value.name === 'createlobby' && 'text-sec-500',
           ]"
         >
           <i
             :class="[
               'h-4 w-[2px] transition-all',
-              router.currentRoute.value.name === 'create' && 'bg-sec-500',
+              router.currentRoute.value.name === 'createlobby' && 'bg-sec-500',
             ]"
           ></i>
           <i class="pi pi-play"></i>

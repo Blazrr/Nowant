@@ -1,7 +1,7 @@
 <template>
   <DefaultLayout>
-    <div class="flex flex-col flex-1 h-full">
-      <div class="flex items-center gap-x-4 flex-1">
+    <div class="flex flex-col flex-1 h-full gap-4">
+      <div class="flex items-center gap-4 flex-1">
         <RouterLink
           to="/lobbies"
           :class="[
@@ -47,14 +47,6 @@
         COMING SOON
       </div>
     </div>
-
-    <!-- </div>
-      <button @click="logout">logout</button>
-      <input type="text" v-model="name" />
-      <button @click="logName">logName</button>
-      <template v-for="agent of apiStore.agents">
-        {{ agent.description }}
-      </template> -->
   </DefaultLayout>
 </template>
 
@@ -83,7 +75,6 @@ const randomMapBg2 =
     .stylizedBackgroundImage ||
   "https://media.valorant-api.com/maps/92584fbe-486a-b1b2-9faa-39b0f486b498/stylizedbackgroundimage.png";
 onMounted(() => {
-  console.log(apiStore.maps);
   if (!overlayStore.isOpen) {
     overlayStore.openOverlay();
   }

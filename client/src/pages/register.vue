@@ -17,7 +17,6 @@ import RegisterStepThree from "../components/Register/StepThree.vue";
 const step = ref(1);
 
 const handleStep = (stepVal: number) => {
-  console.log(stepVal);
   step.value = stepVal;
 };
 </script>

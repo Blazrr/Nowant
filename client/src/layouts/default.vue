@@ -2,7 +2,12 @@
   <div class="flex">
     <Sidebar />
     <div class="flex flex-col flex-1">
-      <Navbar @search-value="$emit('search-value', $event)" />
+      <Navbar
+        @search-value="$emit('search-value', $event)"
+        @show-closed="$emit('show-closed', $event)"
+        @maps-filtered="$emit('maps-filtered', $event)"
+        @refresh="$emit('refresh')"
+      />
       <div class="ml-[200px] mt-[50px] h-[calc(100vh-50px)] py-4 pr-4">
         <slot />
       </div>

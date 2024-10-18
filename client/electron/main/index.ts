@@ -1,12 +1,15 @@
-import { app, BrowserWindow, shell, ipcMain } from "electron";
+import { app, BrowserWindow, shell, ipcMain, globalShortcut } from "electron";
 import { createRequire } from "node:module";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
 import os from "node:os";
 import { registerStoreUpdater } from "../utils/storeUpdater";
 import { registerIpcHandlers } from "../utils/ipcRequests";
+import { getToken } from "../utils/electronStore";
 const require = createRequire(import.meta.url);
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+import dotenv from "dotenv";
+dotenv.config({ path: path.join(__dirname, "../../.env") });
 
 // The built directory structure
 //
@@ -49,6 +52,7 @@ async function createWindow() {
     icon: path.join(process.env.VITE_PUBLIC, "favicon.ico"),
     width: 1024,
     height: 768,
+    resizable: false,
     webPreferences: {
       preload,
       // Warning: Enable nodeIntegration and disable contextIsolation is not secure in production
@@ -106,6 +110,7 @@ app.on("activate", () => {
   }
 });
 let childWindow: BrowserWindow | null = null;
+let lobby = null;
 
 // New window example arg: new windows url
 ipcMain.on("open-overlay", (_, arg) => {
@@ -119,6 +124,24 @@ ipcMain.on("open-overlay", (_, arg) => {
   } else {
     childWindow.loadFile(indexHtml, { hash: "overlay" });
   }
+
+  globalShortcut.register("F7", async () => {
+    if (!lobby) return;
+    try {
+      await fetch(
+        `${process.env.VITE_BACKEND_URL}/lobbies/startGame?lobby_id=${lobby.id}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`,
+          },
+        }
+      );
+    } catch (e) {
+      console.error(e);
+    }
+  });
 });
 
 ipcMain.on("close-overlay", (_, arg) => {
@@ -128,5 +151,11 @@ ipcMain.on("close-overlay", (_, arg) => {
 
 ipcMain.on("update-lobby-store", (event, arg) => {
   childWindow?.webContents.send("update-lobby-store", arg);
+  lobby = JSON.parse(arg);
 });
+
+ipcMain.on("update-user-store", (event, arg) => {
+  childWindow?.webContents.send("update-user-store", arg);
+});
+
 registerIpcHandlers();

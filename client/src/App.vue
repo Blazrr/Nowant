@@ -6,6 +6,7 @@
 <script setup lang="ts">
 import { RouterView } from "vue-router";
 import { useApiStore } from "./store/apiStore";
+import { socket } from "./socket";
 const apiStore = useApiStore();
 </script>
 <style></style>

@@ -79,7 +79,14 @@ export type Agent = {
 };
 
 export type Participation = {
+  id: number;
   timer: number;
+  agent: string;
+  spell: string;
+  x: number;
+  y: number;
+  user: User;
+  lobby: Lobby;
 };
 
 export type Lobby = {

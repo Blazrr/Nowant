@@ -45,7 +45,7 @@ onMounted(() => {
 const upload = async () => {
   try {
     const formData = new FormData();
-    formData.append("file", profilePicture.value.selectedFile);
+    formData.append("file", profilePicture?.value?.selectedFile!);
     await fetch(`${import.meta.env.VITE_BACKEND_URL}/user/picture`, {
       method: "POST",
       headers: {

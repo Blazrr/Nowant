@@ -3,12 +3,30 @@
     class="flex items-center justify-between mt-4 fixed top-0 left-[200px] w-[calc(100%-200px)] pr-4"
   >
     <div class="h-[42px]">
-      <div class="" v-if="router.currentRoute.value.name === 'lobbies'">
+      <div
+        class="flex items-center space-x-4"
+        v-if="router.currentRoute.value.name === 'lobbies'"
+      >
         <InputText
           type="text"
           placeholder="lobby name"
           @input="$emit('search-value', $event.target.value)"
         />
+        <MapFilter @maps-filtered="$emit('maps-filtered', $event)" />
+        <div class="space-x-2 flex items-center">
+          <span>Show private</span>
+          <ToggleSwitch
+            @change="$emit('show-closed', $event.target.checked)"
+            v-model="checked"
+          />
+        </div>
+        <div class="ml-4 flex items-end">
+          <i
+            class="pi pi-refresh ml-4 cursor-pointer text-sec-500 hover:text-sec-600 active:text-sec-700 transition-all font-extrabold"
+            style="font-size: 1.2rem"
+            @click="$emit('refresh')"
+          ></i>
+        </div>
       </div>
     </div>
     <div
@@ -71,6 +89,8 @@ import Popover from "primevue/popover";
 import { RouterLink } from "vue-router";
 import { useRouter } from "vue-router";
 import { useOverlayStore } from "../../store/overlayStore";
+import ToggleSwitch from "primevue/toggleswitch";
+import MapFilter from "./MapFilter.vue";
 
 const router = useRouter();
 const userStore = useUserStore();
@@ -78,6 +98,7 @@ const profilePictureUrl = `${import.meta.env.VITE_BACKEND_URL}/${
   userStore.user?.profile?.picture
 }`;
 const overlayStore = useOverlayStore();
+const checked = ref(true);
 
 const logout = () => {
   window.ipcRenderer.send("logout");

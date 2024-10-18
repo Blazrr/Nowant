@@ -1,6 +1,7 @@
 import Lobby from '#models/lobby'
 import { createLobbyValidator } from '#validators/lobby'
 import type { HttpContext } from '@adonisjs/core/http'
+import emitter from '@adonisjs/core/services/emitter'
 
 export default class LobbiesController {
   async create({ request, response }: HttpContext) {
@@ -39,5 +40,15 @@ export default class LobbiesController {
     }
     await lobby.delete()
     return response.ok(lobby)
+  }
+
+  async startLobby({ request, response }: HttpContext) {
+    try {
+      const lobbyId = request.input('lobby_id')
+      await emitter.emit('start_lobby', lobbyId)
+      return 1
+    } catch (error) {
+      return response.internalServerError('Could not start game')
+    }
   }
 }
