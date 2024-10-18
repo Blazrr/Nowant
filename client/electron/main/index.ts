@@ -1,4 +1,11 @@
-import { app, BrowserWindow, shell, ipcMain, globalShortcut } from "electron";
+import {
+  app,
+  BrowserWindow,
+  shell,
+  ipcMain,
+  globalShortcut,
+  screen,
+} from "electron";
 import { createRequire } from "node:module";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
@@ -114,11 +121,25 @@ let lobby = null;
 
 // New window example arg: new windows url
 ipcMain.on("open-overlay", (_, arg) => {
+  const { width, height } = screen.getPrimaryDisplay().workAreaSize;
   childWindow = new BrowserWindow({
     webPreferences: {
       preload,
     },
+    resizable: false,
+    frame: false,
+    transparent: true,
+    type: "panel",
+    skipTaskbar: true,
+    focusable: false,
+    width,
+    height,
   });
+  childWindow.setIgnoreMouseEvents(true);
+  childWindow.setVisibleOnAllWorkspaces(true, { visibleOnFullScreen: true });
+  childWindow.setAlwaysOnTop(true, "floating");
+  childWindow.moveTop();
+  childWindow.focus();
   if (VITE_DEV_SERVER_URL) {
     childWindow.loadURL("http://localhost:5173#/overlay");
   } else {

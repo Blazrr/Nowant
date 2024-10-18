@@ -2,7 +2,7 @@
   <DefaultLayout>
     <div class="flex items-center pt-12 flex-col relative h-full" v-if="lobby">
       <div class="h-[400px] w-[400px] ring-2 ring-sec-500 relative">
-        <img :src="lobbyMap?.displayIcon" alt="" />
+        <img :src="lobbyMap?.displayIcon" alt="" class="rotate-180" />
         <img
           v-for="participation of lobby?.participations"
           :style="{

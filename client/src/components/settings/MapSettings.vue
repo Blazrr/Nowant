@@ -34,6 +34,7 @@
       <div class="flex-auto">
         <label for="mapZoom" class="font-bold block mb-2 text-center">
           Map zoom
+          {{ userStore.user?.profile?.settings?.mapZoom }}
         </label>
         <InputNumber
           inputId="mapZoom"

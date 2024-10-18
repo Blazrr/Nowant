@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
-import { computed, ref, watch } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 import { User } from "../types/typings";
+import { useOverlayStore } from "./overlayStore";
 
 export const useUserStore = defineStore("user", () => {
   const isLoggedIn = ref(false);
@@ -35,5 +36,32 @@ export const useUserStore = defineStore("user", () => {
     }
   };
 
-  return { user, isLoggedIn, setUser, setToken, token };
+  const fetchUser = async () => {
+    const user = await fetchDatabyToken(token.value);
+    setUser(user);
+  };
+
+  const overlayStore = useOverlayStore();
+  const isOverlayWindow = computed(() => !overlayStore.isOpen);
+
+  // This is a watcher that listens for updates from the main process
+
+  if (isOverlayWindow.value) {
+    window.ipcRenderer.on("update-user-store", (_, data) => {
+      user.value = JSON.parse(data);
+    });
+  }
+
+  // This is a watcher that sends the new value of the lobby store to the child process
+  watch(
+    user,
+    (newVal) => {
+      if (!isOverlayWindow.value) {
+        window.ipcRenderer.send("update-user-store", JSON.stringify(newVal));
+      }
+    },
+    { deep: true }
+  );
+
+  return { user, isLoggedIn, setUser, setToken, token, fetchUser };
 });

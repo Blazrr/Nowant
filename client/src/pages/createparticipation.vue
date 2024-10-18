@@ -19,7 +19,7 @@
         <img
           :src="lobbyMap?.displayIcon"
           alt=""
-          class="w-full h-full mx-auto"
+          class="w-full h-full mx-auto rotate-180"
           @mouseenter="isHovered = true"
           @mouseleave="isHovered = false"
         />

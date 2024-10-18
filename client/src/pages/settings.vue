@@ -2,6 +2,7 @@
   <DefaultLayout>
     <Toast />
     <div class="flex flex-col items-center mx-auto">
+      {{ useOverlayStore().isOpen }}
       <MapSettings ref="mapSettings" />
       <div class="mt-8"></div>
       <ProfilePicture ref="profilePicture" />
@@ -24,6 +25,7 @@ import { useRouter } from "vue-router";
 import ProfilePicture from "../components/settings/ProfilePicture.vue";
 import Toast from "primevue/toast";
 import { useToast } from "primevue/usetoast";
+import { useOverlayStore } from "../store/overlayStore";
 
 const toast = useToast();
 const router = useRouter();
@@ -32,7 +34,7 @@ const mapSettings = useTemplateRef("mapSettings");
 const profilePicture = useTemplateRef("profilePicture");
 
 const saveSettings = async () => {
-  if (profilePicture.value.selectedFile) {
+  if (profilePicture?.value?.selectedFile!) {
     try {
       const formData = new FormData();
       formData.append("file", profilePicture.value.selectedFile);
@@ -54,7 +56,7 @@ const saveSettings = async () => {
         "Content-Type": "application/json",
         Authorization: `Bearer ${userStore.token}`,
       },
-      body: JSON.stringify(mapSettings.value.settings),
+      body: JSON.stringify(mapSettings?.value?.settings!),
     });
   } catch (error) {
     console.error(error);
@@ -65,6 +67,6 @@ const saveSettings = async () => {
     detail: "You have successfully changed your settings",
     life: 5000,
   });
-  //   router.go(0);
+  userStore.fetchUser();
 };
 </script>

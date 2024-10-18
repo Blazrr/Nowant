@@ -1,17 +1,20 @@
 <template>
-  <div>start_lobby_{{ lobbyStore?.lobby?.id }}</div>
-</template>
+  <div class="p-8">
+    <div>start_lobby_{{ lobbyStore?.lobby?.id }}</div>
 
+    <template v-if="lobbyStore?.lobby">
+      <Map />
+    </template>
+  </div>
+</template>
+''
 <script setup lang="ts">
+import Map from "../components/Overlay/Map.vue";
 import { useLobbyStore } from "../store/lobbyStore";
-import { useApiStore } from "../store/apiStore";
-import { useUserStore } from "../store/userStore";
 import { socket } from "../socket";
 import { watch } from "vue";
 
 const lobbyStore = useLobbyStore();
-const apiStore = useApiStore();
-const userStore = useUserStore();
 
 watch(
   () => lobbyStore?.lobby?.id,
