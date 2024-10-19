@@ -13,8 +13,7 @@ export default class extends BaseSchema {
         .jsonb('profile')
         .nullable()
         .defaultTo({
-          picture:
-            'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png',
+          picture: 'default.pjg',
           settings: { mapSize: 1.2, mapZoom: 1, showMap: true },
         })
 

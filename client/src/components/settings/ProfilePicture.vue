@@ -29,9 +29,7 @@ const userStore = useUserStore();
 const toast = useToast();
 const selectedFile = ref<File | null>(null);
 const emit = defineEmits(["handleStep"]);
-const imageUrl = ref<string>(
-  `${import.meta.env.VITE_S3_URL}/assets/default.jpg`
-);
+const imageUrl = ref<string>(`${import.meta.env.VITE_S3_URL}/default.jpg`);
 
 defineExpose({ selectedFile });
 
