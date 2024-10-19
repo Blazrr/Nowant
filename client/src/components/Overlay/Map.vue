@@ -14,6 +14,7 @@
         />
         <div
           v-for="participation of lobbyStore.lobby?.participations"
+          v-if="gameOnRoll"
           class="absolute top-0 left-0"
           :style="{
           left: `${participation.x * (imgSize! / 400) -10}px`,
@@ -33,7 +34,6 @@
           />
         </div>
       </div>
-      {{ userStore.user?.profile.settings.mapZoom }}
     </div>
   </div>
 </template>
@@ -55,6 +55,13 @@ const referenceSizes = {
   divTop: 3.4,
   divLeft: 0.77,
 };
+
+const props = defineProps({
+  gameOnRoll: {
+    type: Boolean,
+    required: true,
+  },
+});
 
 const imgRef = ref<HTMLElement>();
 const imgSize = ref<number | null>(null);

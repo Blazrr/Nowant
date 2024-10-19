@@ -11,6 +11,11 @@
     @mouseleave="isHovered = false"
     @click="joinLobby(lobby)"
   >
+    <div
+      class="absolute top-4 right-4 flex items-center justify-center flex-col"
+    >
+      <img :src="profilePictureUrl" alt="" class="h-6 w-6 rounded-full ml-2" />
+    </div>
     <span
       class="text-sec-500 group-hover:text-sec-600 group-active:text-sec-700 transition-all font-orbitron font-extrabold text-2xl"
     >
@@ -59,7 +64,7 @@
 </template>
 
 <script setup lang="ts">
-import { PropType } from "vue";
+import { computed, PropType } from "vue";
 import { Lobby } from "../../types/typings";
 import { useApiStore } from "../../store/apiStore";
 import Dialog from "primevue/dialog";
@@ -71,10 +76,14 @@ import Toast from "primevue/toast";
 import { useToast } from "primevue/usetoast";
 import { useRouter } from "vue-router";
 
+const profilePictureUrl = computed(
+  () =>
+    `${import.meta.env.VITE_BACKEND_URL}/${props.lobby?.user?.profile?.picture}`
+);
 const toast = useToast();
 const router = useRouter();
 const apiStore = useApiStore();
-defineProps({
+const props = defineProps({
   lobby: {
     type: Object as PropType<Lobby>,
     required: true,
