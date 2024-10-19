@@ -72,6 +72,7 @@ import { useToast } from "primevue/usetoast";
 import Toast from "primevue/toast";
 import { ValidationError } from "yup";
 import bcrypt from "bcryptjs";
+import { router } from "../router";
 const toast = useToast();
 
 const state = reactive({
@@ -108,6 +109,7 @@ const create = async () => {
     if (data.errors) {
       throw new Error(JSON.stringify(data));
     }
+    router.push(`/lobbies/${data.lobbyId}`);
   } catch (err: unknown) {
     let errorMessage = "An unexpected error occurred";
     if (err instanceof ValidationError) {

@@ -32,9 +32,7 @@ import Circles from "../components/Overlay/Circles.vue";
 const lobbyStore = useLobbyStore();
 const profilePictureUrl = computed(
   () =>
-    `${import.meta.env.VITE_BACKEND_URL}/${
-      lobbyStore.lobby?.user?.profile?.picture
-    }`
+    `${import.meta.env.VITE_S3_URL}/${lobbyStore.lobby?.user?.profile?.picture}`
 );
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 const gameOnRoll = ref<boolean>(false);

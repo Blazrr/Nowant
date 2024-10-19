@@ -98,7 +98,7 @@ import MapFilter from "./MapFilter.vue";
 
 const router = useRouter();
 const userStore = useUserStore();
-const profilePictureUrl = `${import.meta.env.VITE_BACKEND_URL}/${
+const profilePictureUrl = `${import.meta.env.VITE_S3_URL}/${
   userStore.user?.profile?.picture
 }`;
 const overlayStore = useOverlayStore();

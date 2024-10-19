@@ -5,40 +5,29 @@ import fs from 'fs'
 
 export default class UsersController {
   async picture({ request, response }: HttpContext) {
-    const file = request.file('file', {
-      size: '2mb',
-      extnames: ['jpg', 'jpeg', 'png', 'gif'],
-    })
-    if (!file) {
-      return response.badRequest({ message: 'No file uploaded' })
-    }
-    const fileName = `${cuid()}.${file.extname}`
     try {
-      await file.move('./public/assets', {
-        name: fileName,
-        overwrite: true,
+      const file = request.file('file', {
+        size: '2mb',
+        extnames: ['jpg', 'jpeg', 'png', 'gif'],
       })
+      if (!file) {
+        return response.badRequest({ message: 'No file uploaded' })
+      }
+      const fileName = `${cuid()}.${file.extname}`
+      console.log('Moving file to S3')
+      await file.moveToDisk(fileName, 's3', {
+        contentType: 'image/png',
+      })
+
       const userId = request.input('userId')
       const user = await User.findOrFail(userId)
-      if (user.profile?.picture) {
-        const oldPicturePath = `./public/${user.profile.picture}`
 
-        if (fs.existsSync(oldPicturePath)) {
-          fs.unlinkSync(oldPicturePath)
-        } else {
-          console.warn('Old picture not found:', oldPicturePath)
-        }
-      }
-
-      if (!user.profile) {
-        user.profile = {}
-      }
-      ;(user.profile as Record<string, unknown>)['picture'] = `assets/${file.fileName}`
+      ;(user.profile as Record<string, unknown>)['picture'] = fileName
       await user.save()
       return response.ok({
         message: 'File uploaded successfully',
-        fileName: file.fileName,
-        filePath: `assets/${file.fileName}`,
+        // fileName: file.fileName,
+        // filePath: `assets/${file.fileName}`,
       })
     } catch (error) {
       console.error('Error uploading file:', error)

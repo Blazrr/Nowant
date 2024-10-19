@@ -5,4 +5,4 @@ const URL =
     ? undefined
     : import.meta.env.VITE_BACKEND_URL;
 
-export const socket = io(URL);
+export const socket = io(import.meta.env.VITE_BACKEND_URL);

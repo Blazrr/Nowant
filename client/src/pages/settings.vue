@@ -58,6 +58,7 @@ const saveSettings = async () => {
       },
       body: JSON.stringify(mapSettings?.value?.settings!),
     });
+    router.go(0);
   } catch (error) {
     console.error(error);
   }

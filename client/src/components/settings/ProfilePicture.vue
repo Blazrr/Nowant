@@ -30,14 +30,14 @@ const toast = useToast();
 const selectedFile = ref<File | null>(null);
 const emit = defineEmits(["handleStep"]);
 const imageUrl = ref<string>(
-  `${import.meta.env.VITE_BACKEND_URL}/assets/default.jpg`
+  `${import.meta.env.VITE_S3_URL}/assets/default.jpg`
 );
 
 defineExpose({ selectedFile });
 
 watchEffect(() => {
   if (userStore.user?.profile?.picture) {
-    imageUrl.value = `${import.meta.env.VITE_BACKEND_URL}/${
+    imageUrl.value = `${import.meta.env.VITE_S3_URL}/${
       userStore.user.profile.picture
     }`;
   }

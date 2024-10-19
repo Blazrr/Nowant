@@ -77,8 +77,7 @@ import { useToast } from "primevue/usetoast";
 import { useRouter } from "vue-router";
 
 const profilePictureUrl = computed(
-  () =>
-    `${import.meta.env.VITE_BACKEND_URL}/${props.lobby?.user?.profile?.picture}`
+  () => `${import.meta.env.VITE_S3_URL}/${props.lobby?.user?.profile?.picture}`
 );
 const toast = useToast();
 const router = useRouter();
