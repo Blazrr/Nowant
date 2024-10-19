@@ -87,7 +87,7 @@ const selectedMap = ref<Map>(
 
 const create = async () => {
   const salt = bcrypt.genSaltSync(10);
-  const hash = bcrypt.hashSync(state.password, salt);
+  const hash = bcrypt.hashSync(state.password || "", salt);
   try {
     const response = await fetch(
       `${import.meta.env.VITE_BACKEND_URL}/lobbies/create`,

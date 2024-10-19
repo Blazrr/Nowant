@@ -10,13 +10,17 @@
         <InputText
           type="text"
           placeholder="lobby name"
-          @input="$emit('search-value', $event.target.value)"
+          @input="
+            $emit('search-value', ($event.target as HTMLInputElement)?.value)
+          "
         />
         <MapFilter @maps-filtered="$emit('maps-filtered', $event)" />
         <div class="space-x-2 flex items-center">
           <span>Show private</span>
           <ToggleSwitch
-            @change="$emit('show-closed', $event.target.checked)"
+            @change="
+              $emit('show-closed', ($event.target as HTMLInputElement)?.checked)
+            "
             v-model="checked"
           />
         </div>

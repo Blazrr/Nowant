@@ -49,7 +49,7 @@ const saveSettings = async () => {
         "Content-Type": "application/json",
         Authorization: `Bearer ${userStore.token}`,
       },
-      body: JSON.stringify(mapSettings.value.settings),
+      body: JSON.stringify(mapSettings.value!.settings),
     });
     router.push("/");
   } catch (error) {

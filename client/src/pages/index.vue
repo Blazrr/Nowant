@@ -79,10 +79,6 @@ onMounted(() => {
     overlayStore.openOverlay();
   }
 });
-
-const logName = () => {
-  lobbyStore.setName(name.value);
-};
 </script>
 
 <style lang="scss" scoped></style>

@@ -25,7 +25,7 @@ import {
 } from "vue";
 import { DateTime, Duration } from "luxon";
 import { useApiStore } from "../../store/apiStore";
-import { Participation } from "../../types";
+import { Participation } from "../../types/typings";
 
 const props = defineProps({
   participation: {
@@ -64,7 +64,7 @@ const elapsed = computed(() => {
 });
 const percent = computed(() => {
   if (elapsed.value && total.value && total.value.milliseconds) {
-    return (elapsed.value.milliseconds / total.value.milliseconds) * 100;
+    return (elapsed.value.milliseconds! / total.value.milliseconds) * 100;
   }
   return 0;
 });
