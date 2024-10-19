@@ -8,7 +8,7 @@
         <img
           :src="map?.displayIcon"
           alt=""
-          class="rotate-180"
+          class="rotate-180 opacity-0"
           @load="updateImgSize"
           ref="imgRef"
         />

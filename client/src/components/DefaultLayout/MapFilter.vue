@@ -16,7 +16,6 @@
 <script setup lang="ts">
 import MultiSelect from "primevue/multiselect";
 import { ref, watch } from "vue";
-import { Map } from "../../types/typings";
 import { useApiStore } from "../../store/apiStore";
 
 const selectedMaps = ref();

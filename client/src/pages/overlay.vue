@@ -18,9 +18,8 @@
       </span>
       <img :src="profilePictureUrl" alt="" class="h-6 w-6 rounded-full ml-2" />
     </div>
-    <Map :gameOnRoll="gameOnRoll" />
-    <Circles :gameOnRoll="gameOnRoll" />
-    <div v-if="gameOnRoll">Playing...</div>
+    <Map v-if="gameOnRoll" :gameOnRoll="gameOnRoll" />
+    <Circles v-if="gameOnRoll" :gameOnRoll="gameOnRoll" />
   </div>
 </template>
 <script setup lang="ts">
@@ -28,11 +27,9 @@ import Map from "../components/Overlay/Map.vue";
 import { useLobbyStore } from "../store/lobbyStore";
 import { socket } from "../socket";
 import { computed, ref, watch } from "vue";
-import { useUserStore } from "../store/userStore";
 import Circles from "../components/Overlay/Circles.vue";
 
 const lobbyStore = useLobbyStore();
-const userStore = useUserStore();
 const profilePictureUrl = computed(
   () =>
     `${import.meta.env.VITE_BACKEND_URL}/${

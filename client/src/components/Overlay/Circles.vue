@@ -1,10 +1,10 @@
 <template>
   <div>
-    <template v-if="gameOnRoll">
+    <div v-if="gameOnRoll" class="flex justify-center space-x-8">
       <template v-for="participation of lobbyStore.lobby?.participations">
         <Circle :participation="participation" :game-on-roll="gameOnRoll" />
       </template>
-    </template>
+    </div>
   </div>
 </template>
 
