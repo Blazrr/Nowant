@@ -1,7 +1,6 @@
 import type { HttpContext } from '@adonisjs/core/http'
 import { cuid } from '@adonisjs/core/helpers'
 import User from '#models/user'
-import fs from 'fs'
 
 export default class UsersController {
   async picture({ request, response }: HttpContext) {
