@@ -1,6 +1,6 @@
 <template>
   <div
-    class="rounded-full border-transparent border-2 absolute"
+    class="rounded-full border-transparent border-1 absolute"
     :style="{ width: mesures.mapSize, top: mesures.y, left: mesures.x }"
   >
     <div :style="{ padding: mesures.padding }">
@@ -17,18 +17,18 @@
           v-if="gameOnRoll"
           class="absolute top-0 left-0"
           :style="{
-          left: `${participation.x * (imgSize! / 400) -10}px`,
-          top: `${participation.y * (imgSize! / 400) -10}px`,
-        }"
+            left: `${participation.x * (imgSize! / 400) - 10}px`,
+            top: `${participation.y * (imgSize! / 400) - 10}px`,
+          }"
         >
           <img
             :src="
-            apiStore.agents.find(
-              (agent) => agent.displayName === participation.agent
-            )?.abilities.find(
-              (ability) => participation.spell === ability.displayName
-            )!.displayIcon
-          "
+              apiStore.agents
+                .find((agent) => agent.displayName === participation.agent)
+                ?.abilities.find(
+                  (ability) => participation.spell === ability.displayName
+                )!.displayIcon
+            "
             class="h-5 w-5"
             alt=""
           />

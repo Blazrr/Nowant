@@ -1,5 +1,5 @@
 <template>
-  <CreateParticipation @selected-data="handleSelectedData">
+  <LobbyLayout @selected-data="handleSelectedData">
     <div class="flex flex-col items-center pt-12 relative h-full">
       <div class="top-4 left-4 absolute">
         <Button label="Go back" @click="router.back()" />
@@ -94,11 +94,11 @@
         </div>
       </div>
     </div>
-  </CreateParticipation>
+  </LobbyLayout>
 </template>
 
 <script setup lang="ts">
-import CreateParticipation from "../layouts/CreateParticipation.vue";
+import LobbyLayout from "../layouts/Lobby.vue";
 
 import { Ability, Agent, Lobby, Map } from "../types/typings";
 import { useUserStore } from "../store/userStore";

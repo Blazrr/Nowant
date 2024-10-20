@@ -42,7 +42,6 @@ watch(
   (newLobbyId) => {
     if (newLobbyId) {
       socket.on(`start_lobby_${newLobbyId}`, () => {
-        console.log("Lobby started");
         startLobby();
       });
     }

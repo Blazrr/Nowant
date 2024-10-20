@@ -146,6 +146,11 @@ ipcMain.on("open-overlay", (_, arg) => {
     childWindow.loadFile(indexHtml, { hash: "overlay" });
   }
 
+  mainWindow.on("closed", () => {
+    childWindow?.close();
+    app.quit();
+  });
+
   globalShortcut.register("F7", async () => {
     if (!lobby) return;
     try {

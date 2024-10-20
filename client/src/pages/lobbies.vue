@@ -6,7 +6,7 @@
     @refresh="fetchLobbies"
   >
     <div class="h-full">
-      <div class="grid grid-cols-4 grid-flow-rows gap-4">
+      <div class="grid grid-cols-3 grid-flow-rows gap-4">
         <template v-for="lobby in filteredLobbies">
           <LobbyCard :lobby="lobby" />
         </template>

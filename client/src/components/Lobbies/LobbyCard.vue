@@ -6,23 +6,31 @@
         apiStore.maps.find((map) => map?.displayName === lobby?.map)?.splash
       })`,
     }"
-    class="h-[120px] rounded-lg bg-center bg-[length:110%_110%] hover:bg-[length:130%_130%] active:bg-[length:150%_150%] transition-all cursor-pointer p-4 relative group hover:grayscale-[75%]"
+    class="h-[180px] rounded-lg bg-center bg-[length:110%_110%] hover:bg-[length:130%_130%] active:bg-[length:150%_150%] transition-all cursor-pointer p-4 relative group hover:grayscale-[75%]"
     @mouseenter="isHovered = true"
     @mouseleave="isHovered = false"
     @click="joinLobby(lobby)"
   >
     <div
       class="absolute top-4 right-4 flex items-center justify-center flex-col"
-    >
-      <img :src="profilePictureUrl" alt="" class="h-6 w-6 rounded-full ml-2" />
+    ></div>
+    <div class="font-orbitron font-extrabold text-md absolute bottom-4 cf">
+      <span class="text-sec-500 font-orbitron font-extrabold text-md">
+        {{ lobby?.name }}
+      </span>
+      <br />
+      <div class="flex font-extrabold font-orbitron">
+        by
+        {{ lobby?.user?.username }}
+        <img
+          :src="profilePictureUrl"
+          alt=""
+          class="h-6 w-6 rounded-full ml-2"
+        />
+      </div>
     </div>
     <span
-      class="text-sec-500 group-hover:text-sec-600 group-active:text-sec-700 transition-all font-orbitron font-extrabold text-2xl"
-    >
-      {{ lobby?.name }}
-    </span>
-    <span
-      class="transition-all font-orbitron font-extrabold text-2xl absolute bottom-4 left-4"
+      class="transition-all font-orbitron font-extrabold text-2xl absolute top-4 left-4"
     >
       {{ lobby?.map }}</span
     >
@@ -33,8 +41,9 @@
       JOIN
     </span>
     <i
+      :style="{ fontSize: '1.5rem' }"
       :class="[
-        'pi absolute right-4 bottom-5',
+        'pi absolute right-4 top-5',
         lobby?.password ? 'pi-lock' : 'pi-lock-open',
       ]"
     ></i>

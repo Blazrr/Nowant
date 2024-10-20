@@ -1,7 +1,7 @@
 <template>
-  <div class="absolute bottom-4 right-4">
+  <div>
     <Button
-      :label="lobbyStore.lobby ? 'Leave lobby' : 'Join lobby'"
+      :label="lobbyStore.lobby ? 'LEAVE' : 'PLAY'"
       @click="joinOrLeaveLobby"
     />
   </div>
