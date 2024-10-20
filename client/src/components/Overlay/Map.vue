@@ -12,27 +12,31 @@
           @load="updateImgSize"
           ref="imgRef"
         />
-        <div
-          v-for="participation of lobbyStore.lobby?.participations"
-          v-if="gameOnRoll"
-          class="absolute top-0 left-0"
-          :style="{
-            left: `${participation.x * (imgSize! / 400) - 10}px`,
-            top: `${participation.y * (imgSize! / 400) - 10}px`,
-          }"
-        >
-          <img
-            :src="
-              apiStore.agents
-                .find((agent) => agent.displayName === participation.agent)
-                ?.abilities.find(
-                  (ability) => participation.spell === ability.displayName
-                )!.displayIcon
+        <template v-for="participation of lobbyStore.lobby?.participations">
+          <div
+            v-if="
+              gameOnRoll &&
+              participation?.user.username === userStore.user?.username
             "
-            class="h-5 w-5"
-            alt=""
-          />
-        </div>
+            class="absolute top-0 left-0"
+            :style="{
+              left: `${participation.x * (imgSize! / 400) - 10}px`,
+              top: `${participation.y * (imgSize! / 400) - 10}px`,
+            }"
+          >
+            <img
+              :src="
+                apiStore.agents
+                  .find((agent) => agent.displayName === participation.agent)
+                  ?.abilities.find(
+                    (ability) => participation.spell === ability.displayName
+                  )!.displayIcon
+              "
+              class="h-5 w-5"
+              alt=""
+            />
+          </div>
+        </template>
       </div>
     </div>
   </div>
@@ -50,11 +54,6 @@ const userStore = useUserStore();
 const map = apiStore.maps.find(
   (map) => map.displayName === lobbyStore.lobby?.map
 );
-const referenceSizes = {
-  width: 20,
-  divTop: 3.4,
-  divLeft: 0.77,
-};
 
 const props = defineProps({
   gameOnRoll: {
@@ -70,6 +69,11 @@ const updateImgSize = () => {
   if (imgRef.value) {
     imgSize.value = imgRef.value.getBoundingClientRect().height;
   }
+};
+const referenceSizes = {
+  width: 20,
+  divTop: 3.4,
+  divLeft: 0.77,
 };
 const mesures = reactive({
   mapSize: `${

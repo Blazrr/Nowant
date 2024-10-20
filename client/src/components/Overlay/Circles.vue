@@ -2,7 +2,11 @@
   <div>
     <div v-if="gameOnRoll" class="flex justify-center space-x-8">
       <template v-for="participation of lobbyStore.lobby?.participations">
-        <Circle :participation="participation" :game-on-roll="gameOnRoll" />
+        <Circle
+          v-if="participation.user.username === userStore.user?.username"
+          :participation="participation"
+          :game-on-roll="gameOnRoll"
+        />
       </template>
     </div>
   </div>
@@ -14,7 +18,10 @@ import { Lobby } from "../../types/typings";
 import { useLobbyStore } from "../../store/lobbyStore";
 import * as luxon from "luxon";
 import Circle from "./Circle.vue";
+import { useUserStore } from "../../store/userStore";
+
 const lobbyStore = useLobbyStore();
+const userStore = useUserStore();
 
 const props = defineProps({
   gameOnRoll: {

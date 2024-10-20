@@ -109,7 +109,7 @@ const create = async () => {
     if (data.errors) {
       throw new Error(JSON.stringify(data));
     }
-    router.push(`/lobbies/${data.lobbyId}`);
+    router.push(`/lobby/${data.id}`);
   } catch (err: unknown) {
     let errorMessage = "An unexpected error occurred";
     if (err instanceof ValidationError) {

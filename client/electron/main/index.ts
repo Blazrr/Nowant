@@ -122,6 +122,7 @@ let lobby = null;
 // New window example arg: new windows url
 ipcMain.on("open-overlay", (_, arg) => {
   const { width, height } = screen.getPrimaryDisplay().workAreaSize;
+  if (childWindow) return;
   childWindow = new BrowserWindow({
     webPreferences: {
       preload,

@@ -2,7 +2,6 @@
   <DefaultLayout>
     <Toast />
     <div class="flex flex-col items-center mx-auto">
-      {{ useOverlayStore().isOpen }}
       <MapSettings ref="mapSettings" />
       <div class="mt-8"></div>
       <ProfilePicture ref="profilePicture" />
@@ -19,13 +18,12 @@
 import Button from "primevue/button";
 import DefaultLayout from "../layouts/default.vue";
 import MapSettings from "../components/settings/MapSettings.vue";
-import { onMounted, useTemplateRef } from "vue";
+import { useTemplateRef } from "vue";
 import { useUserStore } from "../store/userStore";
 import { useRouter } from "vue-router";
 import ProfilePicture from "../components/settings/ProfilePicture.vue";
 import Toast from "primevue/toast";
 import { useToast } from "primevue/usetoast";
-import { useOverlayStore } from "../store/overlayStore";
 
 const toast = useToast();
 const router = useRouter();
@@ -58,7 +56,7 @@ const saveSettings = async () => {
       },
       body: JSON.stringify(mapSettings?.value?.settings!),
     });
-    router.go(0);
+    router.push(router.currentRoute.value.fullPath);
   } catch (error) {
     console.error(error);
   }

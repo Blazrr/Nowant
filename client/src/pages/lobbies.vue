@@ -7,9 +7,7 @@
   >
     <div class="h-full">
       <div class="grid grid-cols-3 grid-flow-rows gap-4">
-        <template v-for="lobby in filteredLobbies">
-          <LobbyCard :lobby="lobby" />
-        </template>
+        <LobbyCard v-for="lobby in filteredLobbies" :lobby="lobby" />
       </div>
     </div>
   </DefaultLayout>
@@ -58,7 +56,7 @@ watch(computedFilters, () => {
     return (
       lobby.name.toLowerCase().includes(searchValue.value.toLowerCase()) &&
       (showClosed.value ? true : !lobby.password) &&
-      (mapsFilter.value.length === 0
+      (!mapsFilter.value.length
         ? true
         : mapsFilter.value.some((map) => map.displayName === lobby.map))
     );
@@ -70,5 +68,3 @@ onMounted(() => {
   fetchLobbies();
 });
 </script>
-
-<style lang="scss" scoped></style>
