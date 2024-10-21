@@ -28,7 +28,6 @@ export default class LobbiesController {
         query.preload('user')
       })
       .first()
-
     return response.ok(lobby)
   }
 
@@ -45,9 +44,11 @@ export default class LobbiesController {
   async startLobby({ request, response }: HttpContext) {
     try {
       const lobbyId = request.input('lobby_id')
+      console.log('Starting game for lobby:', lobbyId)
       await emitter.emit('start_lobby', lobbyId)
       return 1
     } catch (error) {
+      console.error('Error starting game:', error)
       return response.internalServerError('Could not start game')
     }
   }
