@@ -2,7 +2,7 @@
   <LobbyLayout :lobby="lobby">
     <div class="flex items-center pt-12 flex-col relative h-full" v-if="lobby">
       <div class="h-[400px] w-[400px] ring-1 ring-sec-500 relative">
-        <img :src="lobbyMap?.displayIcon" alt="" class="rotate-180" />
+        <img :src="lobbyMap?.displayIcon" alt="" class="" />
         <img
           v-for="participation of lobby?.participations"
           :style="{

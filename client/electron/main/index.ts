@@ -62,6 +62,7 @@ async function createWindow() {
     resizable: false,
     webPreferences: {
       preload,
+      devTools: false,
       // Warning: Enable nodeIntegration and disable contextIsolation is not secure in production
       // nodeIntegration: true,
 
@@ -70,6 +71,7 @@ async function createWindow() {
       // contextIsolation: false,
     },
   });
+  mainWindow.setMenuBarVisibility(false);
 
   if (VITE_DEV_SERVER_URL) {
     mainWindow.loadURL(VITE_DEV_SERVER_URL);
@@ -156,7 +158,7 @@ ipcMain.on("open-overlay", (_, arg) => {
     if (!lobby) return;
     try {
       await fetch(
-        `${process.env.VITE_BACKEND_URL}/lobbies/startGame?lobby_id=${lobby.id}`,
+        `https://nowant.onrender.com/lobbies/startGame?lobby_id=${lobby.id}`,
         {
           method: "GET",
           headers: {
